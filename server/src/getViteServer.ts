@@ -11,6 +11,9 @@ export async function getViteServer({ force } = { force: false }) {
       base: '/',
       server: {
         middlewareMode: 'html',
+        hmr: {
+          port: 3010,
+        },
       },
     });
   }

@@ -1,6 +1,19 @@
+<script setup lang="ts">
+import data from '../mock/data.json';
+import type { People } from '../interfaces/Person.interface';
+const people: People = data;
+
+function handleInput(e: Event) {
+  const element = e.target as HTMLElement;
+  if (!element.dataset.x) return;
+
+  // TODO: Implement communication with server
+}
+</script>
+
 <template>
   <div class="wrapper">
-    <table class="people-data">
+    <table class="people-data" @input="handleInput">
       <thead>
         <th class="head_info"></th>
         <th class="head_info">First Name</th>
@@ -13,10 +26,21 @@
         <tr
           class="person_row"
           :key="person.phone"
-          v-for="(person, index) in people"
+          v-for="(person, indexX) in people"
         >
-          <td class="cell">{{ index + 1 }}</td>
-          <td class="cell" v-for="key of Object.keys(person)">
+          <td class="cell">{{ indexX + 1 }}</td>
+          <!-- To disable spellchecking on all browsers -->
+          <td
+            contenteditable="true"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            class="cell"
+            :data-x="indexX"
+            :data-y="indexY"
+            v-for="(key, indexY) of Object.keys(person)"
+          >
             {{ person[key] }}
           </td>
         </tr>
@@ -24,12 +48,6 @@
     </table>
   </div>
 </template>
-
-<script setup lang="ts">
-import data from '../mock/data.json';
-import type { People } from '../interfaces/Person.interface';
-const people: People = data;
-</script>
 
 <style lang="scss" scoped>
 .wrapper {
@@ -53,6 +71,11 @@ const people: People = data;
 .cell {
   padding: 0.5rem 1rem;
   text-align: center;
+  outline: none;
+}
+
+.cell:hover {
+  color: hsl(153, 47%, 49%);
 }
 </style>
 
