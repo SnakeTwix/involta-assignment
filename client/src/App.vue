@@ -1,13 +1,29 @@
 <script setup lang="ts">
 import data from '../mock/data.json';
 import type { People } from '../interfaces/Person.interface';
+import { useSocket } from '../composables/useSocket';
 const people: People = data;
+const socket = useSocket();
+
+socket.on('table/change', (data) => {
+  const selector = `[data-x='${data.x}'][data-y='${data.y}']`;
+  const element = document.querySelector(selector) as HTMLElement;
+
+  if (!element) return;
+
+  element.innerText = data.data;
+});
 
 function handleInput(e: Event) {
   const element = e.target as HTMLElement;
   if (!element.dataset.x) return;
 
   // TODO: Implement communication with server
+  socket.emit('table/change', {
+    x: +element.dataset.x,
+    y: +element.dataset.y,
+    data: element.innerText,
+  });
 }
 </script>
 

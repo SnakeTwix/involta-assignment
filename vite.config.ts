@@ -16,6 +16,7 @@ export default defineConfig({
 
   build: {
     minify: true,
+    outDir: resolve(__dirname, 'dist', 'client'),
     rollupOptions: {
       treeshake: true,
     },
