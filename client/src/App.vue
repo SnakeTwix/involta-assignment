@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import data from '../mock/data.json';
 import type { People } from '../interfaces/Person.interface';
 import { useSocket } from '../composables/useSocket';
-const people: People = data;
+import { onBeforeMount, ref } from 'vue';
+import axios from 'axios';
 const socket = useSocket();
 
+let people = ref<People | null>(null);
+
 socket.on('table/change', (data) => {
+  // Table cell selector
   const selector = `[data-x='${data.x}'][data-y='${data.y}']`;
   const element = document.querySelector(selector) as HTMLElement;
 
@@ -14,11 +17,18 @@ socket.on('table/change', (data) => {
   element.innerText = data.data;
 });
 
+// Get table data
+onBeforeMount(async () => {
+  people.value = await axios.get('/people').then<People>((res) => {
+    return res.data;
+  });
+});
+
 function handleInput(e: Event) {
+  // Get the table cell
   const element = e.target as HTMLElement;
   if (!element.dataset.x) return;
 
-  // TODO: Implement communication with server
   socket.emit('table/change', {
     x: +element.dataset.x,
     y: +element.dataset.y,
