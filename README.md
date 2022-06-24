@@ -9,3 +9,5 @@ docker compose up dev`
 Запустить продакшен
 `docker compose build prod
 docker compose up prod`
+
+`localhost:3000`
