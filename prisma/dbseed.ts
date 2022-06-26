@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-const data = require('../mock/data.json');
+const data = require('../../mock/data.json');
 const prisma = new PrismaClient();
 
 export const load = async () => {

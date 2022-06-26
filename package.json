@@ -6,7 +6,9 @@
   "private": false,
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build && vite build -c vite.config.ts",
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "nest build",
+    "build:client": "vite build -c vite.config.ts --emptyOutDir",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
