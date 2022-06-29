@@ -4,7 +4,7 @@
 
 Запустить для режима дебага
 `docker compose build dev
-docker compose up dev` 
+docker compose up dev`
 
 Запустить продакшен
 `docker compose build prod
