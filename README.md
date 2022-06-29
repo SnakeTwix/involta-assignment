@@ -2,12 +2,12 @@
 
 Тестовое задание
 
+1. `yarn build`
+
 Запустить для режима дебага
-`docker compose build dev
-docker compose up dev`
+`docker compose up dev`
 
 Запустить продакшен
-`docker compose build prod
-docker compose up prod`
+`docker compose up prod`
 
 `localhost:3000`
