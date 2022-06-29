@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-const data = require('../../mock/data.json');
+import { people } from './mock/data';
 const prisma = new PrismaClient();
 
 export const load = async () => {
@@ -7,7 +7,7 @@ export const load = async () => {
     await prisma.person.deleteMany();
 
     await prisma.person.createMany({
-      data,
+      data: people,
     });
     console.log('Added people');
   } catch (e) {

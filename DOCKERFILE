@@ -4,15 +4,16 @@ ENV NODE_VERSION 18.4.0
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package.json ./
+COPY yarn.lock ./
 
-RUN npm install glob rimraf
+RUN yarn add glob rimraf -D
 
-RUN npm install --only=development
+RUN yarn
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 FROM node:18 as production
 
@@ -23,11 +24,12 @@ ENV NODE_VERSION 18.4.0
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY yarn.lock ./
 
-RUN npm install --only=production
+RUN yarn
 
 COPY . .
 
-COPY --from=development /usr/src/app/dist ./dist
+RUN yarn build
 
 CMD ["node", "dist/server/src/main"]
